@@ -4,6 +4,9 @@ path: /bcast
 
 INIT:
   - cd /opt/cup-services/bcast && HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcast .
+  # 수정이 필요함. 
+  # cli cobra 프로젝트 빌드, server 코드 빌드 따로 해야함. 
+  # 서버 빌드 결과물은 따로 systemd 로 따로 관리해야함.
 
 START:
   - systemctl start bcast

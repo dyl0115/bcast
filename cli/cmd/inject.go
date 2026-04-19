@@ -33,7 +33,7 @@ var injectCmd = &cobra.Command{
 		}
 
 		// HTTP POST 요청 - ffmpeg stdout을 body로 스트리밍
-		resp, err := http.Post("http://localhost:8080/inject", "audio/mpeg", ffmpegOut)
+		resp, err := http.Post("http://localhost:8336/inject", "audio/mpeg", ffmpegOut)
 		if err != nil {
 			ffmpeg.Process.Kill()
 			return fmt.Errorf("HTTP POST 실패: %w", err)

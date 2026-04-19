@@ -9,5 +9,5 @@ func main() {
 	go InitInjectQueueWorker()
 	http.HandleFunc("/inject", handleInject)
 	http.HandleFunc("/stream", handleStream)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8336", nil))
 }
