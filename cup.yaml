@@ -1,0 +1,22 @@
+id: dcast
+port: 8336
+path: /dcast
+
+INIT:
+  - cd /opt/cup-services/dcast && HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/dcast .
+
+START:
+  - systemctl start dcast
+
+STOP:
+  - systemctl stop dcast
+
+RESTART:
+  - systemctl restart dcast
+
+PING:
+  - systemctl is-active dcast
+
+TERMINATE:
+  - systemctl disable --now dcast
+  - rm -f /usr/local/bin/dcast
