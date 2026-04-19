@@ -1,0 +1,22 @@
+id: bcast
+port: 8336
+path: /bcast
+
+INIT:
+  - cd /opt/cup-services/bcast && HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcast .
+
+START:
+  - systemctl start bcast
+
+STOP:
+  - systemctl stop bcast
+
+RESTART:
+  - systemctl restart bcast
+
+PING:
+  - systemctl is-active bcast
+
+TERMINATE:
+  - systemctl disable --now bcast
+  - rm -f /usr/local/bin/bcast
