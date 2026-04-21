@@ -3,23 +3,40 @@ port: 8336
 path: /bcast
 
 INIT:
-  - cd /opt/cup-services/bcast && HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcast .
-  # 수정이 필요함. 
   # cli cobra 프로젝트 빌드, server 코드 빌드 따로 해야함. 
   # 서버 빌드 결과물은 따로 systemd 로 따로 관리해야함.
+  # ffmpeg가 설치되어 있어야함.
+
+  # 두용 서버(bcastd 빌드)
+  - HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcastd .
+  # 두용 서버(bcast-cli 빌드)
+  - cd cli
+  - HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcast ./cli/.
+
+  # 로컬 테스트(bcastd 개발 버전 빌드)
+  - go build .
+  # 로컬 테스트(bcast-cli 개발 버전 빌드)
+  - cd cli 
+  - go build -o .. .
 
 START:
-  - systemctl start bcast
+  # 두용서버 (bcastd 실행)
+  - systemctl start bcastd
+
+  # 로컬 개발 서버 실행
+  - cd C:\Users\dyl01\Desktop\bcast
+  - .\bcastd.exe
 
 STOP:
-  - systemctl stop bcast
+  # 두용서버 (bcastd 일시정지)
+  - systemctl stop bcastd
 
 RESTART:
-  - systemctl restart bcast
+  - systemctl restart bcastd
 
 PING:
-  - systemctl is-active bcast
+  - systemctl is-active bcastd
 
 TERMINATE:
-  - systemctl disable --now bcast
-  - rm -f /usr/local/bin/bcast
+  - systemctl disable --now bcastd
+  - rm -f /usr/local/bin/bcastd
