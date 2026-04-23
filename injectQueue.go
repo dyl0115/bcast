@@ -47,6 +47,11 @@ func InitInjectQueueWorker() {
 				// Broadcaster가 버퍼 내 오디오 청크를 서버와 연결된 모든 클라이언트에게 전송
 				bc.Send(buf[:n])
 			}
+
+			// 오디오 청크를 모두 읽는 경우, 다음 데이터를 클라이언트에게 전송
+			if err == io.EOF {
+				break
+			}
 			// 오디오 청크를 읽는 도중 예외 발생시, 다음 데이터를 클라이언트 전송
 			if err != nil {
 				break

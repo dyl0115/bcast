@@ -24,10 +24,11 @@ func handleStream(w http.ResponseWriter, r *http.Request) {
 // 재생할 오디오를 Bcast 서버에 등록하기 위한 요청
 // 사용자 혹은 AI Agent가 localhost:8368/inject에
 // raw 오디오 바이너리(mp3 등)를 HTTP Body에 담아 POST 요청
-// 흠... 그런데 저 오디오 바이너리를 어떻게, HTTP Body에 담아서 POST 요청을 날리지?
-//  1. 정적 오디오 파일 (.mp3)
-//  2. 스트리밍 오디오 스트리밍 바이너리 (라디오)
-//  3. Google TTS 오디오 스트리밍 바이너리
+// 오디오 바이너리를 HTTP Body에 담아서 POST 요청을 날리면 됨
+//  1. 정적 오디오 파일 (.mp3) -> 오디오 파일을 Bcast 서버로 POST 전송하는 CLI 프로그램에서 일정 텀으로 청크를 나눠 Bcast로 송신하면 됨
+//  2. 스트리밍 오디오 스트리밍 바이너리 (라디오) -> KBS 라디오에서 송출하는 오디오 스트림을 그대로 Bcast로 송신하면 됨
+//  3. Google Streamable TTS 오디오 스트리밍 바이너리 -> Google TTS API가 스트림하는 오디오 데이터를 그대로 Bcast로 송신하면 됨
+//  4. Google Static TTS 오디오 스트리밍 파일(.mp3) -> Google TTS가 생성한 오디오 파일을 일정 텀으로 청크를 나눠 Bcast로 송신하면 됨
 func handleInject(w http.ResponseWriter, r *http.Request) {
 	done := make(chan struct{})
 
