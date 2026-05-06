@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"text/template"
 )
 
 // 오디오 데이터를 스트리밍 받을 사용자가 서버로 요청.
@@ -42,4 +43,21 @@ func handleInject(w http.ResponseWriter, r *http.Request) {
 	// 즉 "워커가 다 읽었다고 신호 줄 때까지 HTTP 커넥션 유지해"라는 의미
 	<-done
 	w.WriteHeader(http.StatusOK)
+}
+
+// template.Must()는 html 파싱에 실패하면 즉시 패닉.
+// 즉, html 파싱에러가 발생하면, 서버가 실행되지 않아서 좋다.
+var tmpl = template.Must(template.ParseFiles("templates/home.html"))
+
+func handleHome(w http.ResponseWriter, r *http.Request) {
+
+	// /asdfjk 같은 이상한 경로는 404 에러 출력
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	tmpl.Execute(w, nil)
 }

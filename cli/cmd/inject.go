@@ -15,7 +15,7 @@ var injectCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		//ffmpeg -i song.mp3 -f mp3 - | curl.exe -X POST --data-binary @- http://localhost:8080/inject
+		//ffmpeg -i song.mp3 -f mp3 - | curl.exe -X POST --data-binary @- http://localhost:8336/inject
 
 		filePath := args[0]
 
