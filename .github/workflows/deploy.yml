@@ -13,10 +13,10 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: doubledragon.duckdns.org
-          username: dooyong
+          username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/dooyong/projects/bcast
             git pull
             HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcastd .
-            sudo systemctl restart bcastd
+            systemctl restart bcastd
