@@ -17,6 +17,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
+            git config --global --add safe.directory /home/dooyong/projects/bcast
             cd /home/dooyong/projects/bcast
             git pull
             HOME=/root GOCACHE=/root/.cache/go go build -buildvcs=false -o /opt/bcastd/bcastd .
