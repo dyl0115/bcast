@@ -11,11 +11,12 @@ import (
 // nginx 설정에 따라 커넥션의 지속시간이 달라짐.
 func handleStream(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/mpeg")
+	w.WriteHeader(http.StatusOK)
+	w.(http.Flusher).Flush()
+
 	ch := bc.Register()
 	defer bc.Unregister(ch)
 
-	// 채널이 닫힐 때 까지 무한대기
-	// 클라이언트가 직접 연결을 종료할 때까지 24시간 커넥션 연결
 	for chunk := range ch {
 		w.Write(chunk)
 		w.(http.Flusher).Flush()
