@@ -16,7 +16,8 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -e
             cd /home/dooyong/projects/bcast
             git pull
-            HOME=/root GOCACHE=/root/.cache/go go build -o /opt/bcastd/bcastd .
+            HOME=/root GOCACHE=/root/.cache/go go build -buildvcs=false -o /opt/bcastd/bcastd .
             systemctl restart bcastd
