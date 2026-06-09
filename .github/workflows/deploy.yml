@@ -18,5 +18,5 @@ jobs:
           script: |
             cd /home/dooyong/projects/bcast
             git pull
-            HOME=/root GOCACHE=/root/.cache/go go build -o /usr/local/bin/bcastd .
+            HOME=/root GOCACHE=/root/.cache/go go build -o /opt/bcastd/bcastd .
             systemctl restart bcastd
